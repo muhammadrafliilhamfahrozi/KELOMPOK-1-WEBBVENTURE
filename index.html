@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leon S. Kennedy - Mission Log</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      :root {
+        --re4-dark-brown: #2a1a10; 
+        --re4-blood-red: #6b0000; 
+        --re4-infected-red: #c00000; 
+        --re4-muted-green: #3e4a3a; 
+        --re4-parchment: #c1b7a4; 
+        --re4-dark-gray: #a19999; 
+        --re4-text-light: #d4c8b6; 
+        --re4-accent-gold: #b48c50; 
+        --re4-white: #dfcfcf;
+      }
+
+      body {
+        font-family: 'Helvetica Neue', 'Arial', sans-serif; 
+        background: linear-gradient(135deg, var(--re4-dark-gray) 0%, #000000 100%);
+        color: var(--re4-text-light);
+        line-height: 1.6;
+      }
+
+      .navbar-custom {
+        background: linear-gradient(135deg, var(--re4-dark-brown) 0%, var(--re4-dark-gray) 100%);
+        padding: 0.8rem 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        border-bottom: 2px solid var(--re4-blood-red);
+      }
+
+      .nav-link {
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        position: relative;
+        color: var(--re4-parchment) !important;
+      }
+
+      .nav-link:hover {
+        color: var(--re4-infected-red) !important;
+        transform: translateY(-2px);
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 50%;
+        background: var(--re4-infected-red);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-link:hover::after {
+        width: 80%;
+      }
+
+      .hero-section {
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('http://googleusercontent.com/image_generation_content/2') center center/cover no-repeat; 
+        background-blend-mode: overlay;
+        border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--re4-muted-green);
+      }
+      
+      .hero-section-content {
+        background-color: rgba(12, 12, 12, 0.75);
+        padding: 2rem;
+        border-radius: 5px;
+      }
+
+
+      .profile-img-container { 
+        border: 4px solid var(--re4-blood-red);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        transition: all 0.3s ease;
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        margin:auto;
+      }
+
+      .profile-img-container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(107,0,0,0.5);
+      }
+      
+      .profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+
+      .hero-title {
+        font-size: 2.8rem;
+        font-weight: bold;
+        color: var(--re4-infected-red);
+        margin-bottom: 0.5rem;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      }
+
+      .hero-subtitle {
+        color: var(--re4-parchment);
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin-bottom: 1rem;
+      }
+
+      .hero-description {
+        color: var(--re4-text-light);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .section-card {
+        background: rgba(30, 20, 10, 0.8); 
+        border-radius: 10px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+        border: 1px solid var(--re4-muted-green);
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .section-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        border-color: var(--re4-accent-gold);
+      }
+
+      .section-title {
+        color: var(--re4-parchment);
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--re4-blood-red), var(--re4-accent-gold));
+        border-radius: 2px;
+      }
+
+      .nav-tabs {
+        border-bottom: 1px solid var(--re4-muted-green);
+      }
+
+      .nav-tabs .nav-link { 
+        background: transparent;
+        border: 1px solid var(--re4-muted-green) !important;
+        border-bottom: none !important;
+        color: var(--re4-parchment) !important;
+        margin-right: 5px;
+        border-radius: 5px 5px 0 0;
+        font-weight: 600;
+      }
+      
+      .nav-tabs .nav-link.active,
+      .nav-tabs .nav-link:hover {
+        background: var(--re4-blood-red) !important;
+        color: white !important;
+        border-color: var(--re4-blood-red) !important;
+        transform: translateY(0);
+        box-shadow: none;
+      }
+
+      .tab-content { 
+        background: rgba(12, 12, 12, 0.6);
+        border-radius: 0 0 10px 10px;
+        padding: 2rem;
+        margin-top: -1px; 
+        border: 1px solid var(--re4-muted-green);
+      }
+
+      .portfolio-card {
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--re4-muted-green);
+        background-color: var(--re4-white);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      }
+
+      .portfolio-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      }
+
+      .portfolio-img {
+        height: 250px;
+        object-fit: cover;
+        transition: all 0.3s ease;
+        filter: sepia(0.3) contrast(1.1) brightness(0.9); 
+      }
+
+      .portfolio-card:hover .portfolio-img {
+        transform: scale(1.1);
+        filter: sepia(0.1) contrast(1.2) brightness(1);
+      }
+
+      .btn-re4-primary {
+        background: var(--re4-blood-red);
+        border: 1px solid var(--re4-infected-red);
+        color: white;
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(107,0,0, 0.3);
+        text-transform: uppercase;
+      }
+
+      .btn-re4-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(192,0,0, 0.4);
+        color: #ffff;
+        background: var(--re4-infected-red);
+        border-color: var(--re4-blood-red);
+      }
+
+      .article-quote {
+        border-left: 4px solid var(--re4-accent-gold);
+        background: linear-gradient(135deg, rgba(42,26,16,0.7), rgba(30,20,10,0.9));
+        border-radius: 10px;
+        font-style: italic;
+        position: relative;
+        color: var(--re4-parchment);
+      }
+
+      .article-quote::before {
+        content: '“'; 
+        font-size: 4rem;
+        color: var(--re4-accent-gold);
+        position: absolute;
+        top: -15px;
+        left: 15px;
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      .footer-custom {
+        background: linear-gradient(135deg, var(--re4-dark-brown) 0%, #000000 100%);
+        border-top: 2px solid var(--re4-blood-red);
+        color: var(--re4-parchment);
+      }
+      
+      .status-badge { 
+        background: var(--re4-infected-red);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .navbar-toggler {
+        border: 1px solid var(--re4-parchment);
+      }
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28212, 200, 182, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+      .card-title {
+        color: var(--re4-infected-red);
+      }
+      .text-muted {
+        color: var(--re4-accent-gold) !important;
+      }
+      .flip-card {
+        background-color: transparent;
+        width: 200px;
+        height: 200px;
+        perspective: 1000px;
+        margin: auto;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border: 4px solid var(--leon);
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .flip-card-back {
+        transform: rotateY(180deg);
+      }
+      /* Removing flip card CSS as we are using a single image for simplicity due to generation constraints */
+      /* Removing floating animation as it might not fit the gritty theme */
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand text-white fw-bold fs-4" href="#">
+          <span style="color: var(--re4-infected-red);">CLASSIFIED</span> REPORT
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="#home">Home</a>
+            <a class="nav-link" href="#profile">Agent Profile</a>
+            <a class="nav-link" href="#tactical-skills">Tactical Skills</a>
+            <a class="nav-link" href="#debrief">Encounter Logs</a>
+            <a class="nav-link" href="#field-notes">Agent Background</a>
+            <a class="nav-link" href="#tactical-reflections">Tactical Reflections</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div style="padding-top: 100px;"></div>
+
+    <div class="container py-5" id="home">
+      <div class="hero-section p-md-5 p-3">
+        <div class="row align-items-center hero-section-content">
+          <div class="col-md-8">
+            <div class="status-badge">MISSION: ACTIVE</div>
+            <h1>Resident Evil 4</h1>
+            <h2 class="hero-title">Agent Leon S. Kennedy</h2>
+            <p class="hero-subtitle">Special Agent | Survivor | Asset Retrieval</p>
+            <p class="hero-description">
+             Leon Scott Kennedy , lebih dikenal sebagai Leon S. Kennedy adalah seorang Italia-Amerika yang saat ini bekerja sebagai agen federal oleh Divisi Operasi Keamanan (DSO), sebuah badan antiterorisme di bawah komando langsung Presiden . Kennedy adalah seorang penyintas Insiden Penghancuran Raccoon City 1998 yang diketahui, saat itu seorang polisi. Setelah melarikan diri, ia direkrut secara paksa ke dalam tim anti- Umbrella rahasia di bawah USSTRATCOM yang dikhususkan untuk pertempuran anti- BOW , bertugas hingga 2011 dalam operasi berulang di seluruh dunia.
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <img src="leon.jpg" class="rounded-circle" alt="Leon" width="200" height="200" />
+                </div>
+                <div class="flip-card-back">
+                  <img src="https://media.tenor.com/NwCw2xklXs4AAAAi/leon-leon-kennedy.gif" class="rounded-circle" alt="Hunter" width="200" height="200" />
+                </div>
+              </div>
+            </div>
+            <small class="text-muted d-block mt-2">Agent L.S. Kennedy - DSO</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5" id="profile">
+      <div class="section-card p-4 p-md-5">
+        <h3 class="section-title">Profile Agent</h3>
+        <p class="lead">
+          Leon adalah tokoh utama dalam beberapa game, novel, dan film Resident Evil, dan telah muncul dalam waralaba game lainnya, termasuk Project X Zone dan Dead by Daylight. Dia juga muncul dalam film animasi yang dibuat dengan citra yang dihasilkan komputer (CGI) dan dalam miniseri animasi. Dalam game selanjutnya, seperti Resident Evil 2 (2019) dan Resident Evil 4 (2023), penampilannya didasarkan pada model Rumania, Eduard Badaluta. Beberapa aktor telah memerankan Leon; Paul Haddad, Paul Mercier, Matthew Mercer, Nick Apostolides, dan Toshiyuki Morikawa telah memberikan suaranya untuk video game dan animasi, sementara Johann Urb dan Avan Jogia telah memerankannya dalam film live-action Resident Evil.
+        </p>
+      </div>
+    </div>
+
+    <div class="container py-5" id="tactical-skills">
+      <div class="section-card p-4 p-md-5">
+        <h3 class="section-title">Tactical Skills</h3>
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="combat-tab" data-bs-toggle="tab" data-bs-target="#combat-pane" type="button" role="tab" aria-controls="combat-pane" aria-selected="true">
+              Pertempuran Jarak Dekat (CQC)
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="survival-tab" data-bs-toggle="tab" data-bs-target="#survival-pane" type="button" role="tab" aria-controls="survival-pane" aria-selected="false">
+              Bertahan Hidup & Menghindar
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="threat-tab" data-bs-toggle="tab" data-bs-target="#threat-pane" type="button" role="tab" aria-controls="threat-pane" aria-selected="false">
+              Netralisasi Ancaman
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="asset-tab" data-bs-toggle="tab" data-bs-target="#asset-pane" type="button" role="tab" aria-controls="asset-pane" aria-selected="false">
+              Protokol Perlindungan Aset
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="combat-pane" role="tabpanel" aria-labelledby="combat-tab">
+            <h5>Pertempuran Jarak Dekat (CQC)</h5>
+            <p>Pertempuran Jarak Dekat (CQC)
+Mahir dengan berbagai macam senjata api dan senjata jarak dekat. Pertarungan dengan pisau dan menangkis sangat penting untuk melawan musuh yang terinfeksi Plaga. Fokus pada tembakan presisi untuk menghemat sumber daya dan melumpuhkan musuh untuk serangan lanjutan.</p>
+          </div>
+          <div class="tab-pane fade" id="survival-pane" role="tabpanel" aria-labelledby="survival-tab">
+            <h5>Bertahan Hidup & Menghindar</h5>
+            <p>Bertahan Hidup & Menghindar
+Manajemen sumber daya (amunisi, item penyembuh) sangat penting. Memanfaatkan siluman, kesadaran lingkungan, dan kerajinan untuk mempertahankan efektivitas operasional di wilayah yang tidak bersahabat. Menghindari rintangan yang besar terkadang merupakan taktik terbaik.</p>
+          </div>
+          <div class="tab-pane fade" id="threat-pane" role="tabpanel" aria-labelledby="threat-tab">
+            <h5>Netralisasi Ancaman</h5>
+            <p>Netralisasi Ancaman
+Mengidentifikasi dan mengeksploitasi kelemahan pada berbagai jenis yang terinfeksi, dari Ganados standar hingga B.O.W. yang lebih tangguh yang ditemui. Mengadaptasi taktik berdasarkan perilaku musuh dan mutasi Plaga.</p>
+          </div>
+          <div class="tab-pane fade" id="asset-pane" role="tabpanel" aria-labelledby="asset-tab">
+            <h5>Protokol Perlindungan Aset</h5>
+            <p>Protokol Perlindungan Aset
+Tujuan utama: memastikan keselamatan Ashley Graham. Ini termasuk taktik pengawalan, posisi bertahan, dan memanfaatkan bantuannya jika memungkinkan. Kesejahteraannya tidak bisa dinegosiasikan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5" id="debrief">
+      <h3 class="section-title">Encounter Logs</h3>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card portfolio-card h-100">
+            <video controls>
+        <source src=LeonVsZealots.mp4 class="card-img-top portfolio-img" alt="El Pueblo Siege" style="filter: contrast(1.2) brightness(0.8) saturate(0.5);" type=video/mp4>
+        </video>
+            <div class="card-body">
+              <h5 class="card-title">Leon Vs Zealots</h5>
+              <p class="card-text">
+                Pertarungan antara Leon S. Kennedy dan para Zealot terjadi saat Leon memasuki kastil milik kultus fanatik Los Iluminados dalam misinya menyelamatkan Ashley Graham. Zealot adalah anggota kultus berjubah yang lebih terorganisir dan berbahaya dibanding musuh sebelumnya (Ganado), serta memiliki kemampuan tempur yang lebih agresif.
+              </p>
+              <p class="card-text">
+                <small class="text-muted">Log Date: Day 1 - 1400hrs</small>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card portfolio-card h-100">
+            <img src="https://media1.tenor.com/m/dB2dKX4poJQAAAAd/leon-kennedy.gif" class="card-img-top portfolio-img" alt="Garrador Encounter" style="filter: grayscale(0.8) brightness(0.7) contrast(1.3);"/>
+            <div class="card-body">
+              <h5 class="card-title">Raja Leon</h5>
+              <p class="card-text">
+                <h1>Aku Raja</h1>
+              </p>
+              <p class="card-text">
+                <small class="text-muted">Log Date: Day 2 - 0300hrs</small>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card portfolio-card h-100">
+            <img src="https://media1.tenor.com/m/7DyqNJdGon4AAAAd/leonskennedy-leon.gif" class="card-img-top portfolio-img" alt="Salazar's Zealots" style="filter: sepia(0.6) contrast(1.1);"/>
+            <div class="card-body">
+              <h5 class="card-title">Cool Leon</h5>
+              <p class="card-text">
+                Setelah selamat dari tragedi Raccoon City, Leon direkrut oleh pemerintah AS dan menjadi bagian dari unit rahasia untuk melawan ancaman bioterorisme. Dia kemudian menjabat sebagai agen DSO dan melakukan berbagai misi berbahaya, termasuk:
+
+<li>Menyelamatkan Ashley Graham, putri Presiden AS dalam Resident Evil 4 (2005).</li>
+
+<li>Menghadapi bioteror global dalam Resident Evil 6 (2012).</li>
+
+<li>Terlibat dalam film-film CGI Resident Evil seperti Degeneration, Damnation, dan Vendetta.</li>
+              </p>
+              <p class="card-text">
+                <small class="text-muted">Log Date: Day 2 - Ongoing</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5" id="field-notes"> <div class="section-card p-4 p-md-5 text-center">
+        <h3 class="section-title">Agent Background</h3>
+        <p class="lead mb-4">
+          Akses berkas yang aman untuk catatan layanan lengkap, pujian, dan garis besar misi sebelumnya (Memerlukan Izin Level Gamma).
+        </p>
+        <button class="btn btn-re4-primary btn-lg">
+          📂 Akses berkas
+        </button>
+      </div>
+    </div>
+
+    <div class="container py-5" id="field-notes">
+      <h3 class="section-title">Tactical Reflections</h3>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="section-card p-4">
+            <div class="article-quote p-4">
+              <blockquote class="blockquote mb-0">
+                <p>"Bertahan hidup bukanlah keberuntungan. Ini adalah memori otot dan naluri-yang dipertajam oleh kegagalan, diperkuat oleh tekad. Aku telah melihat kota jatuh dan monster bangkit. Aku tidak ragu lagi."</p>
+              </blockquote>
+              <figcaption class="blockquote-footer mt-3 text-white-50">
+                Leon S. Kennedy, <cite title="Internal Monologue">Echoes of Raccoon</cite>
+              </figcaption>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="section-card p-4">
+            <div class="article-quote p-4">
+              <blockquote class="blockquote mb-0">
+                <p>"Anda tidak lari dari kegelapan-Anda bergerak melaluinya, dengan penuh perhitungan dan dingin. Ketakutan tidak akan menghentikan Anda. Ketakutan mengajarkan Anda di mana Anda tidak boleh berdarah."</p>
+              </blockquote>
+              <figcaption class="blockquote-footer mt-3 text-white-50">
+                Leon S. Kennedy, <cite title="Castle Approach">Internal Monologue – Operation Javier</cite>
+              </figcaption>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer-custom py-4 mt-5" id="tactical-reflections">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <h5>Secure Transmission Channel</h5>
+            <p>COMSEC Protocol Delta-7 Active</p>
+            <p>Operator ID: Leon.S.Kennedy_DSO_7709</p>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <p><strong>U.S. STRATEGIC COMMAND</strong></p>
+            <p>"In Umbra, Pro Umbra" (For the Shadows, By the Shadows)</p>
+          </div>
+        </div>
+        <hr class="my-3" style="border-color: rgba(180,140,80,0.2);">
+        <div class="text-center">
+          <p class="mb-0">© 2025 Resident Evil 4 </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Add smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+      // Bootstrap's own JS handles tab functionality via data attributes, custom script for this is not needed.
+    </script>
+</body>
+</html>
